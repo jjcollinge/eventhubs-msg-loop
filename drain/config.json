@@ -1,0 +1,10 @@
+{
+	"EventhubsConnectionString":"",
+	"EventhubsName":"",
+	"EventhubsConsumerGroup":"",
+	"NumberOfEventhubPartitions": "",
+	"DeviceId": "",
+	"FakeDeviceId": "",
+	"EventhubsUrl": "",
+	"SasToken": ""
+}

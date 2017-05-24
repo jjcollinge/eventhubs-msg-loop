@@ -1,0 +1,8 @@
+{
+	"JsonRpcEndpoint":"",
+	"ContractAddress":"",
+	"ContractSignature":"",
+	"ContractAbi":"",
+	"SasToken":"",
+	"EventhubsUrl":""
+}
