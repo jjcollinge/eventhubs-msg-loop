@@ -3,6 +3,9 @@ var web3 = new Web3();
 var Config = require('./config.json');
 var request = require('request');
 
+/**
+ * Pull in configuration from local config.json file
+ */
 var jsonRpcEndpoint = Config['JsonRpcEndpoint']
 var contractAddress = Config['ContractAddress']
 var contractSignature = Config['ContractSignature']
@@ -11,34 +14,37 @@ var eventhubsUrl = Config['EventhubsUrl']
 var contractAbi = JSON.parse(Config['ContractAbi'])
 var contractAddress = Config['ContractAddress']
 
-web3.setProvider(new web3.providers.HttpProvider(jsonRpcEndpoint));
-
-function PostToEventHubs(telemetry, callback) {
+/**
+ * Posts telemetry to a given eventhubs HTTP endpoint
+ * @param {*} telemetry
+ * @param {*} callback
+ */
+function SendToEventHubs(telemetry, callback) {
 	var options =
-	{
+		{
 			method: 'POST',
 			uri: eventhubsUrl,
 			headers:
 			{
-					authorization: sasToken
+				authorization: sasToken
 			},
 			body: telemetry
-	}
+		}
 	request(options, (error, response, body) => {
 		if (error) throw new Error(error);
 		callback(response);
 	});
 }
 
+// Create connection to a provided JsonRpc endpoint
+web3.setProvider(new web3.providers.HttpProvider(jsonRpcEndpoint));
+
+// Subscribe to telemetry events from given contract
 var contract = web3.eth.contract(contractAbi).at(contractAddress);
 evt = contract.TelemetryReceived();
 evt.watch((error, result) => {
 	console.log("TelemetryReceived fired")
-	if(error) {
-		console.log(error)
-		throw error
-	}
-	// Telemetry received
+	if (error) throw new Error(error);
 	console.log("Raw result")
 	console.log(result)
 	console.log("")
@@ -46,7 +52,7 @@ evt.watch((error, result) => {
 	console.log("Telemetry")
 	console.log(telemetry)
 	console.log("")
-	PostToEventHubs(telemetry, (response) => {
-		console.log(response.statusCode);	
+	SendToEventHubs(telemetry, (response) => {
+		console.log(response.statusCode);
 	});
 });
