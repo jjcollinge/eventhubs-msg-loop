@@ -1,5 +1,5 @@
 # Eventhubs Message Loop
-The *Eventhubs message loop* allows you to listen to specific events on a [smart contract]((https://github.com/vjrantal/telemetry-contract) and publish the contents of the event to [Azure Eventhubs](https://docs.microsoft.com/en-us/azure/event-hubs/). These messages can then be filtered and transformed appropriately for downstream services to process.
+The *Eventhubs message loop* allows you to listen to specific events on a [smart contract](https://github.com/vjrantal/telemetry-contract) and publish the contents of the event to [Azure Eventhubs](https://docs.microsoft.com/en-us/azure/event-hubs/). These messages can then be filtered and transformed appropriately for downstream services to process.
 
 This repository contains 2 separate applications:
 * Pump
